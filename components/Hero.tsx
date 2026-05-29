@@ -2,114 +2,82 @@
 
 import { motion } from "framer-motion";
 import { hero } from "@/lib/content";
-import { FloatingCards } from "./hero/FloatingCards";
-import { WaveformBg } from "./hero/WaveformBg";
+import { usePrefersReducedMotion } from "@/lib/motion";
+import { HeroVisual } from "./hero/HeroVisual";
+import { Logo } from "./Logo";
 import { Button } from "./ui/Button";
+import { Label } from "./ui/Label";
 
 export function Hero() {
+  const reduced = usePrefersReducedMotion();
+
   return (
-    <section className="relative min-h-screen overflow-hidden grain-overlay bg-hero-glow pt-24">
-      <WaveformBg />
-      <FloatingCards />
+    <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-28">
+      <div className="hero-wave-grid pointer-events-none absolute inset-0" aria-hidden />
+      <div className="diagonal-stripe pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+      <div className="pointer-events-none absolute -left-20 top-20 h-64 w-64 rounded-full bg-violet-500/12 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-signal/5 blur-3xl" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-24 lg:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <h1 className="text-balance text-4xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
-            {hero.headline}
-          </h1>
-          <p className="mt-6 text-lg text-white/60 md:text-xl">
-            {hero.subheadline}
-          </p>
+      <div className="container-main relative">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <motion.div
-            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-            initial={{ opacity: 0, y: 16 }}
+            initial={reduced ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
           >
-            <Button href="#early-access" variant="primary">
-              {hero.primaryCta}
-            </Button>
-            <Button href="#how-it-works" variant="ghost">
-              {hero.secondaryCta}
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mx-auto mt-16 max-w-4xl"
-        >
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#141414] shadow-2xl shadow-violet-500/10">
-            <div className="flex border-b border-white/10 bg-[#0d0d0d] px-4 py-3">
-              <div className="flex gap-2">
-                <div className="h-3 w-3 rounded-full bg-red-500/80" />
-                <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
-                <div className="h-3 w-3 rounded-full bg-green-500/80" />
-              </div>
-              <span className="mx-auto text-xs text-white/30">
-                dizko — Project Dashboard
+            <div className="mb-8 flex flex-wrap items-center gap-3">
+              <Logo size={44} priority className="rounded-2xl" />
+              <span className="pill-tag border-accent/20 text-accent">
+                Creative Power Unlocked
               </span>
             </div>
-            <div className="flex aspect-[16/10]">
-              <div className="hidden w-48 shrink-0 border-r border-white/10 bg-[#0d0d0d] p-4 sm:block">
-                <div className="mb-4 h-3 w-20 rounded bg-white/10" />
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className={`mb-2 h-8 rounded-lg ${
-                      i === 1
-                        ? "border border-violet-500/30 bg-violet-500/20"
-                        : "bg-white/5"
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="flex-1 p-6">
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="h-5 w-32 rounded bg-white/10" />
-                  <div className="h-8 w-24 rounded-full bg-violet-500/30" />
-                </div>
-                <div className="space-y-3">
-                  {[
-                    "Track 01 — Intro",
-                    "Track 02 — Verse",
-                    "Track 03 — Chorus",
-                    "Track 04 — Bridge",
-                  ].map((track, i) => (
-                    <div
-                      key={track}
-                      className="flex items-center gap-4 rounded-lg border border-white/5 bg-white/[0.02] p-3"
-                    >
-                      <div className="h-10 w-10 shrink-0 rounded bg-gradient-to-br from-violet-500/40 to-blue-500/40" />
-                      <div className="flex-1">
-                        <p className="text-sm text-white/80">{track}</p>
-                        <div className="mt-2 flex gap-1">
-                          {Array.from({ length: 24 }).map((_, j) => (
-                            <div
-                              key={j}
-                              className="w-0.5 rounded-full bg-violet-500/50"
-                              style={{
-                                height: `${8 + Math.sin(j + i) * 12}px`,
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <span className="text-xs text-white/30">3:42</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+
+            <Label index={1}>For musicians &amp; producers</Label>
+
+            <h1 className="mt-6 font-display text-[2.75rem] font-bold uppercase leading-[0.92] tracking-tight text-primary sm:text-6xl lg:text-[4.25rem]">
+              Your music,{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">organized.</span>
+                <span
+                  className="absolute -bottom-1 left-0 right-0 h-3 rounded-full bg-accent/25"
+                  aria-hidden
+                />
+              </span>
+              <br />
+              Your team,{" "}
+              <span className="font-serif text-[0.92em] normal-case italic text-accent">
+                in sync.
+              </span>
+            </h1>
+
+            <p className="mt-7 max-w-lg font-body text-base leading-relaxed text-secondary sm:text-lg">
+              {hero.subheadline}
+            </p>
+
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Button href="#early-access">{hero.primaryCta}</Button>
+              <Button href="#how-it-works" variant="ghost">
+                {hero.secondaryCta}
+              </Button>
             </div>
-          </div>
-        </motion.div>
+
+            <div className="mt-10 flex flex-wrap gap-2">
+              {["Smart tagging", "DAW sync", "Real-time collab"].map((tag) => (
+                <span key={tag} className="pill-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1 }}
+          >
+            <HeroVisual />
+          </motion.div>
+        </div>
       </div>
     </section>
   );
